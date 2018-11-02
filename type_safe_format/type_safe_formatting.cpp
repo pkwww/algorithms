@@ -4,12 +4,16 @@
 #include <array>
 #include <unordered_set>
 #include <stdexcept>
+#include <type_traits>
+#include <utility>
 using std::string;
 using std::vector;
 using std::string_view;
 using std::array;
 using std::unordered_set;
 using std::invalid_argument;
+using std::invoke_result_t;
+using std::declval;
 
 using format_specifier_t = string;
 
@@ -47,5 +51,25 @@ auto parse_format_string(string format_string) {
 }
 
 template <class ... Ts>
-string printf_s(string format_string, Ts... args) {
+bool check_format_string(string format_string, Ts... args) {
+  
+}
+
+using begin_t = invoke_result_t< decltype(&vector<format_specifier_t>::cbegin)() >;
+using end_t = invoke_result_t< decltype(&vector<format_specifier_t>::cend)() >;
+
+// need a function that take a string return type
+
+template<class T>
+bool check_format_string_r(begin_t v_begin, end_t v_end, T arg) {
+  if (v_begin != v_end - 1) {
+    // TODO: wrong
+  } else {
+
+  }
+}
+
+template <class T, class ... Ts>
+bool check_format_string_r(begin_t v_begin, end_t v_end, Ts... args) {
+
 }

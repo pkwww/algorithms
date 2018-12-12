@@ -15,7 +15,7 @@ using std::invalid_argument;
 using std::invoke_result_t;
 using std::declval;
 
-using format_specifier_t = string;
+using format_specifier_t = char;
 
 // get the list of format specifier
 // for now, just ignore the flags, width, .precision, length
@@ -40,9 +40,7 @@ auto parse_format_string(string format_string) {
         } else if (next == '%') {
           i++;
         } else {
-          format_specifier_t format_specifier = string("%");
-          format_specifier.push_back(next);
-          result.push_back(format_specifier);
+          result.push_back(next);
           i++;
         }
       }
@@ -61,11 +59,28 @@ using end_t = invoke_result_t< decltype(&vector<format_specifier_t>::cend)() >;
 // need a function that take a string return type
 
 template<class T>
+bool check_specifier(format_specifier_t specifier, T arg) {
+  
+  switch (specifier)
+  {
+    case 'd':
+    case 'i':
+
+      break;
+  
+    default:
+      break;
+  }
+  return true;
+}
+
+template<class T>
 bool check_format_string_r(begin_t v_begin, end_t v_end, T arg) {
   if (v_begin != v_end - 1) {
-    // TODO: wrong
+    return false;
   } else {
-
+    auto specifier = *v_begin;
+    check_specifier(specifier, arg);
   }
 }
 
